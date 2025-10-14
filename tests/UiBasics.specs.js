@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-test.only('First Playwright test', async ({ browser }) => {   // Anonymous function with fat arrow
+test.only('First Playwright test', async ({ browser }) => {   // Anonymous function with fat arrows
 
     //chrome - plugins / cookies
     const context = await browser.newContext();

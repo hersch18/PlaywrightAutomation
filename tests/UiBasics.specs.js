@@ -11,6 +11,9 @@ test.only('First Playwright test', async ({ browser }) => {   // Anonymous funct
     await page.locator('#username').fill("Harsh");  // Type is deprecated so we are not using it
     await page.locator("[type = 'password']").fill("Learning");
     await page.locator("#signInBtn").click();
+    console.log(await page.locator("[style*=block]").textContent());
+    await expect(page.locator("[style*=block]")).toContainText("Incorrect");
+
 
 
 

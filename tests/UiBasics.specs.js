@@ -5,14 +5,26 @@ test.only('First Playwright test', async ({ browser }) => {   // Anonymous funct
     //chrome - plugins / cookies
     const context = await browser.newContext();
     const page = await context.newPage();
+    const username = page.locator('#username');
+    const passowrd = page.locator("[type = 'password']");
+    const cardTitles = page.locator(".card-body a");
+    const signIn = page.locator("#signInBtn");
     await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
     console.log(await page.title());
     await expect(page).toHaveTitle("LoginPage Practise | Rahul Shetty Academy")
-    await page.locator('#username').fill("Harsh");  // Type is deprecated so we are not using it
-    await page.locator("[type = 'password']").fill("Learning");
+    await username.fill("Harsh");  // Type is deprecated so we are not using it
+    await passowrd.fill("learning");
     await page.locator("#signInBtn").click();
     console.log(await page.locator("[style*=block]").textContent());
     await expect(page.locator("[style*=block]")).toContainText("Incorrect");
+    await username.fill("");
+    await username.fill("rahulshettyacademy");
+    await signIn.click();
+    // console.log(await cardTitles.first().textContent());
+    //await page.waitForLoadState('networkidle');
+    await cardTitles.first().waitFor();
+    const allcardtitles = await cardTitles.allTextContents();
+    console.log(allcardtitles);
 
 
 

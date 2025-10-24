@@ -41,7 +41,7 @@ jobs:
 
           Regards,
           GitHub Actions
-        to: "harshbhaksaar18@gmail.com,renukadhangar00@gmail.com"
+        to: "renukadhangar00@gmail.com,herschbhaksaar@gmail.com"
         from: "QA Automation <${{ secrets.EMAIL_USERNAME }}>"
         attachments: playwright-report.zip    
     - uses: actions/upload-artifact@v4

@@ -18,7 +18,32 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: npx playwright test
+      run: npx playwright test --reporter=html    
+    - name: Zip HTML report
+      run: zip -r playwright-report.zip playwright-report
+    - name: Send Email with Report
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 465
+        username: ${{ secrets.EMAIL_USERNAME }}
+        password: ${{ secrets.EMAIL_PASSWORD }}
+        subject: "Playwright Test Report - ${{ github.repository }}"
+        body: |
+          Hi Team,
+          
+          The latest Playwright test run has completed.
+          See attached report.
+
+          Repository: ${{ github.repository }}
+          Branch: ${{ github.ref_name }}
+          Commit: ${{ github.sha }}
+
+          Regards,
+          GitHub Actions
+        to: "harshbhaksaar18@gmail.com,renukadhangar00@gmail.com"
+        from: "QA Automation <${{ secrets.EMAIL_USERNAME }}>"
+        attachments: playwright-report.zip    
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:

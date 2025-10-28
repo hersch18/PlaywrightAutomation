@@ -1,19 +1,37 @@
 const { test, expect,request } = require('@playwright/test');
+const {APIUtils} = require('./Utils/APIUtils');
 
 const loginpayload = {
     userEmail: "harshbhaksaar18@gmail.com",
     userPassword: "Iversion10@"
 };
 
-test.beforeAll(async()=>
+const orderpayload = {orders: [{country: "British Indian Ocean Territory", productOrderedId: "68a961459320a140fe1ca57a"}]};
+
+let token;
+
+test("First API Testing",async()=>
 {
 
 const apicontext = await request.newContext();
-const loginResponse = apicontext.post("https://rahulshettyacademy.com/api/ecom/auth/login",{data:loginpayload});
-expect((await loginResponse).ok()).toBeTruthy();
-const loginresponsejson=(await loginResponse).json();
-const token = loginresponsejson.token();
-console.log(token);
+console.log(APIUtils);
+const apiutils = new APIUtils(apicontext,loginpayload);
+const response = await apiutils.getorder(orderpayload);
+console.log(response);
+// const orderid = getorder(orderpayload);
+
+//create order 
+
 
     
 });
+
+// test("First API Testing",async({page})=>{
+
+// page.addInitScript(value =>{
+
+//     window.localStorage.setItem('tokem',value)
+// },token)
+
+
+// })

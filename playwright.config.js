@@ -22,7 +22,7 @@ const config = ({
   use: {
    
     browserName : 'chromium',
-    headless : true
+    headless : false
   },
 
   

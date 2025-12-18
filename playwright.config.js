@@ -22,7 +22,11 @@ const config = ({
   use: {
    
     browserName : 'chromium',
-    headless : false
+    headless : false,
+    screenshot : 'on',
+    trace : 'on',
+
+
   },
 
   

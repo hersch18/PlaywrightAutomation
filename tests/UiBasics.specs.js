@@ -68,3 +68,29 @@ test('static dropdowns', async ({ page }) => {   // Anonymous function  //This t
     await expect(documentlink).toHaveAttribute("class","blinkingText"); // to check the blinking text
     await page.pause();     // Used for Debugging
 });
+
+
+test.only('switch to new window', async ({ page }) => {
+
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    const username = page.locator('#username');
+    await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+    const documentlink = page.locator("[href*='documents-request']");
+    const [newpage] = promise.all(
+       [ context.waitForEvent('page'), // changing the context to new page.  // promise we used to run the paralley so as to avoid errors 
+    documentlink.click(),   // promises can be pending,rejected or Fulfilled
+    ] // new page is opened
+    );
+    
+    text = await newpage.locator("(//p[@class='im-para'])[1]").textContent();
+    console.log(text);
+
+
+
+
+
+
+
+
+});    

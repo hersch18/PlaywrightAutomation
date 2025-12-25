@@ -41,7 +41,7 @@ test('Page Playwright test', async ({ page }) => {   // Anonymous function
     await expect(page).toHaveTitle("Google")
 });
 
-test('static dropdowns', async ({ page }) => {   // Anonymous function  //This test case handles dropdown
+test.only('static dropdowns', async ({ page }) => {   // Anonymous function  //This test case handles dropdown
 
     // //chrome - plugins / cookies
     // const context = await browser.newContext();
@@ -70,21 +70,27 @@ test('static dropdowns', async ({ page }) => {   // Anonymous function  //This t
 });
 
 
-test.only('switch to new window', async ({ page }) => {
+test('switch to new window', async ({browser }) => {
 
     const context = await browser.newContext();
     const page = await context.newPage();
     const username = page.locator('#username');
     await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
     const documentlink = page.locator("[href*='documents-request']");
-    const [newpage] = promise.all(
+    const [newpage] =await  Promise.all(
        [ context.waitForEvent('page'), // changing the context to new page.  // promise we used to run the paralley so as to avoid errors 
     documentlink.click(),   // promises can be pending,rejected or Fulfilled
     ] // new page is opened
     );
     
-    text = await newpage.locator("(//p[@class='im-para'])[1]").textContent();
+    const text = await newpage.locator("//p[@class='im-para red']").textContent();
     console.log(text);
+    const arraytext = text.split('@');
+    const domain = arraytext[1].split(" ")[0];
+    await page.pause();
+    page.locator('#username').fill(domain);
+    console.log(await page.locator('#username').inputValue()); // input value is the value which is not present in the dom and we can dynamically add it and retrive it.
+    console.log(domain);
 
 
 
